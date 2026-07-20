@@ -1,0 +1,17 @@
+{
+  "short_name": "Lịch Học 365",
+  "name": "Thời Gian Biểu Tròn 24H",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2693/2693507.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#090d16",
+  "theme_color": "#151b2d",
+  "display": "standalone",
+  "orientation": "portrait"
+}
