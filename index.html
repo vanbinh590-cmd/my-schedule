@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thời Gian Biểu Tròn 24H - Lộ Trình 365 Ngày</title>
+    <title>Thời Gian Biểu Tròn 24H - Lộ Trình Mục Tiêu</title>
     <!-- PWA Web App Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1f1f1f">
@@ -50,7 +50,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                    LỘ TRÌNH 365 NGÀY <span class="text-xs bg-blue-500/20 text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-500/30">Chế Độ Tối Ưu</span>
+                    LỘ TRÌNH MỤC TIÊU <span class="text-xs bg-blue-500/20 text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-500/30">Chế Độ Tối Ưu</span>
                 </h1>
                 <p class="text-xs text-gray-400">Thời gian biểu hình tròn 24 giờ • Ngủ trước 23:00</p>
             </div>
@@ -84,8 +84,8 @@
 
 <!-- Main Container -->
 <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex-grow w-full">
-    <div class="grid grid-cols-1 grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-        <!-- Day Counter Widget -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+        <!-- Day Counter Widget (Updated with Editable Goal Days) -->
         <div class="lg:col-span-8 bg-darkCard border border-gray-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 glow-blue">
             <div class="flex items-center gap-4 w-full sm:w-auto">
                 <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
@@ -96,18 +96,24 @@
                     <span id="days-percent" class="text-xs font-bold text-blue-400">0%</span>
                 </div>
                 <div>
-                    <h3 class="font-bold text-white text-base">Thử Thách 365 Ngày</h3>
-                    <p class="text-xs text-gray-400">Học tập đa ngôn ngữ mỗi ngày là chìa khóa mở cánh cửa tương lai</p>
-                    <div class="flex items-center gap-2 mt-2">
-                        <label class="text-[10px] text-gray-400">Bắt đầu:</label>
-                        <input type="date" id="start-date-input" class="bg-gray-900 border border-gray-700 text-xs text-white rounded px-1.5 py-0.5 focus:outline-none focus:border-blue-500">
+                    <h3 class="font-bold text-white text-base">Thử Thách Học Tập</h3>
+                    <p class="text-xs text-gray-400">Thiết lập ngày bắt đầu và tổng số ngày mục tiêu của bạn</p>
+                    <div class="flex flex-wrap items-center gap-3 mt-2">
+                        <div class="flex items-center gap-1.5">
+                            <label class="text-[10px] text-gray-400">Bắt đầu:</label>
+                            <input type="date" id="start-date-input" class="bg-gray-900 border border-gray-700 text-xs text-white rounded px-1.5 py-0.5 focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <label class="text-[10px] text-gray-400">Số ngày mục tiêu:</label>
+                            <input type="number" id="total-days-input" min="1" value="365" class="w-16 bg-gray-900 border border-gray-700 text-xs text-white rounded px-1.5 py-0.5 text-center focus:outline-none focus:border-blue-500 font-bold">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-center gap-6 justify-between w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-gray-800 pt-3 sm:pt-0 sm:pl-6">
                 <div class="text-center sm:text-left">
-                    <div class="text-2xl font-black text-white" id="days-passed">0 <span class="text-sm font-normal text-gray-400">/ 365 ngày</span></div>
+                    <div class="text-2xl font-black text-white" id="days-passed">0 <span class="text-sm font-normal text-gray-400" id="days-passed-total-label">/ 365 ngày</span></div>
                     <div class="text-[11px] text-gray-400">Đã hoàn thành</div>
                 </div>
                 <div class="text-center sm:text-left">
@@ -190,7 +196,7 @@
 
         <!-- RIGHT COLUMN: Dashboard & Sync Configuration -->
         <div class="lg:col-span-6 xl:col-span-5 flex flex-col gap-6">
-            <!-- New Local Sync Connection Card (Replaces Crash Firebase) -->
+            <!-- Offline Connection Sync Box -->
             <div class="bg-gradient-to-br from-indigo-950/40 to-slate-900 border border-indigo-500/20 rounded-2xl p-4 shadow-xl">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-2">
@@ -206,9 +212,9 @@
 
                 <div class="space-y-3">
                     <div class="bg-gray-950/80 rounded-xl p-2.5 border border-gray-800 flex items-center justify-between">
-                        <div>
+                        <div class="overflow-hidden mr-2">
                             <div class="text-[10px] text-gray-500">Chuỗi dữ liệu đồng bộ của bạn:</div>
-                            <div id="sync-code-display" class="text-[11px] font-mono font-bold text-indigo-300 mt-0.5 truncate max-w-[220px]">Tải thành công</div>
+                            <div id="sync-code-display" class="text-[11px] font-mono font-bold text-indigo-300 mt-0.5 truncate max-w-[200px] sm:max-w-[250px]">Tải thành công</div>
                         </div>
                         <button onclick="copyDataSyncCode()" class="flex items-center gap-1 px-2.5 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-lg text-xs font-semibold text-indigo-300 transition-all shrink-0">
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i> Sao chép gói dữ liệu
@@ -222,7 +228,7 @@
                         </button>
                     </div>
                     <p class="text-[10px] text-gray-400 leading-relaxed">
-                        💡 <strong>Cách đồng bộ lỗi mạng:</strong> Chỉ cần nhấn **Sao chép gói dữ liệu** ở thiết bị này, gửi chuỗi đó sang điện thoại qua Zalo/Messenger, rồi dán vào ô bên dưới bấm **Ghi đè tiến độ**. Toàn bộ lịch học, ô tích xanh (Checklist) sẽ nhảy sang ngay lập tức!
+                        💡 <strong>Cách đồng bộ lỗi mạng:</strong> Sao chép mã ở máy tính, gửi qua điện thoại rồi dán vào ô trên bấm <strong>Ghi đè tiến độ</strong>. Số ngày mục tiêu mới cũng sẽ tự động chuyển sang!
                     </p>
                 </div>
             </div>
@@ -319,7 +325,7 @@
 
 <footer class="border-t border-gray-900 bg-black/40 py-4 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500">
-        Thiết kế tối ưu theo mô hình khoa học thần kinh học tập. Hãy duy trì đều đặn 365 ngày để gặt hái kết quả xuất sắc!
+        Thiết kế tối ưu theo mô hình khoa học thần kinh học tập. Hãy duy trì đều đặn lộ trình để gặt hái kết quả xuất sắc!
     </div>
 </footer>
 
@@ -614,13 +620,18 @@
 
     function updateCountdownDashboard() {
         const startDateInput = document.getElementById('start-date-input');
+        const totalDaysInput = document.getElementById('total-days-input');
+        
         let startDateVal = localStorage.getItem('365_start_date');
+        let totalDaysVal = parseInt(localStorage.getItem('365_total_days')) || 365;
+        
         if (!startDateVal) {
             const d = new Date();
             startDateVal = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
             localStorage.setItem('365_start_date', startDateVal);
         }
         startDateInput.value = startDateVal;
+        totalDaysInput.value = totalDaysVal;
 
         const start = new Date(startDateVal);
         const today = new Date();
@@ -628,29 +639,41 @@
 
         const diffTime = today.getTime() - start.getTime();
         let daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        if (daysPassed < 1) daysPassed = 1; if (daysPassed > 365) daysPassed = 365;
+        if (daysPassed < 1) daysPassed = 1; 
+        if (daysPassed > totalDaysVal) daysPassed = totalDaysVal;
 
-        document.getElementById('days-passed').innerHTML = `${daysPassed} <span class="text-sm font-normal text-gray-400">/ 365 ngày</span>`;
-        document.getElementById('days-remaining').textContent = 365 - daysPassed;
-        const progressPct = Math.round((daysPassed / 365) * 100);
+        document.getElementById('days-passed').innerHTML = `${daysPassed} <span class="text-sm font-normal text-gray-400" id="days-passed-total-label">/ ${totalDaysVal} ngày</span>`;
+        document.getElementById('days-remaining').textContent = totalDaysVal - daysPassed;
+        
+        const progressPct = Math.round((daysPassed / totalDaysVal) * 100);
         document.getElementById('days-percent').textContent = `${progressPct}%`;
 
         const circle = document.getElementById('goal-progress-circle');
         circle.style.strokeDashoffset = 175 - (progressPct / 100) * 175;
     }
 
+    // Connect event listeners for goal configuration changes
     document.getElementById('start-date-input').addEventListener('change', (e) => {
         localStorage.setItem('365_start_date', e.target.value);
         updateCountdownDashboard();
         refreshLiveSyncString();
     });
 
-    // --- NEW LOCAL ENCODED SYNC PIPELINE (100% RELIABLE) ---
+    document.getElementById('total-days-input').addEventListener('change', (e) => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 365;
+        localStorage.setItem('365_total_days', val);
+        updateCountdownDashboard();
+        refreshLiveSyncString();
+    });
+
+    // --- LOCAL ENCODED SYNC PIPELINE ---
     function refreshLiveSyncString() {
         const packageData = {
             sd: scheduleData,
             cl: checklistStates,
-            date: localStorage.getItem('365_start_date') || ''
+            date: localStorage.getItem('365_start_date') || '',
+            totalDays: parseInt(localStorage.getItem('365_total_days')) || 365
         };
         const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(packageData))));
         document.getElementById('sync-code-display').textContent = encoded;
@@ -673,6 +696,7 @@
             if (decoded.sd) scheduleData = decoded.sd;
             if (decoded.cl) checklistStates = decoded.cl;
             if (decoded.date) localStorage.setItem('365_start_date', decoded.date);
+            if (decoded.totalDays) localStorage.setItem('365_total_days', decoded.totalDays);
             
             saveScheduleDataToStorage();
             saveChecklistToStorage();
