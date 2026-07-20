@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thời Gian Biểu Tròn 24H - Lộ Trình 365 Ngày</title>
-    <!-- Google Fonts -->
+    <!-- PWA Web App Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1f1f1f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Google Fonts & Tailwind -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
@@ -20,57 +23,30 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        darkBg: '#090d16',
-                        darkCard: '#151b2d',
-                        accentBlue: '#2563eb',
-                        accentRed: '#f43f5e',
-                        accentOrange: '#f97316',
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { darkBg: '#090d16', darkCard: '#151b2d', accentBlue: '#2563eb', accentRed: '#f43f5e', accentOrange: '#f97316' }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #090d16;
-            color: #f3f4f6;
-            overflow-x: hidden;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090d16;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
-        .glow-blue {
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
-        }
-        .glow-active {
-            filter: drop-shadow(0 0 8px currentColor);
-        }
+        body { font-family: 'Inter', 'sans-serif'; background-color: #090d16; color: #f3f4f6; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .glow-blue { box-shadow: 0 0 20px rgba(37, 99, 235, 0.15); }
+        .glow-heavy { filter: drop-shadow(0 0 8px currentColor); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
 <!-- Header Block -->
-<header class="border-b border-gray-800 bg-darkCard/80 backdrop-blur-md sticky top-0 z-40 transition-all">
+<header class="border-b border-gray-800 bg-darkCard/80 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div class="flex items-center gap-3">
             <div class="p-2.5 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-900/30">
-                <i data-lucide="compass" class="w-6 h-6 text-white animate-spin-slow"></i>
+                <i data-lucide="compass" class="w-6 h-6 text-white"></i>
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
@@ -80,7 +56,6 @@
             </div>
         </div>
 
-        <!-- Goals Quick Status -->
         <div class="flex flex-wrap items-center gap-2 sm:gap-4">
             <div class="bg-gray-900/60 border border-gray-800 rounded-lg px-3 py-1.5 flex items-center gap-2">
                 <span class="text-lg">🇺🇸</span>
@@ -109,14 +84,11 @@
 
 <!-- Main Container -->
 <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex-grow w-full">
-    
-    <!-- Top Bar: Quick Stats & Mode Selector -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+    <div class="grid grid-cols-1 grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
         <!-- Day Counter Widget -->
         <div class="lg:col-span-8 bg-darkCard border border-gray-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 glow-blue">
             <div class="flex items-center gap-4 w-full sm:w-auto">
                 <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
-                    <!-- Circular Progress Background -->
                     <svg class="absolute w-full h-full transform -rotate-90">
                         <circle cx="32" cy="32" r="28" stroke="#1e293b" stroke-width="5" fill="transparent" />
                         <circle id="goal-progress-circle" cx="32" cy="32" r="28" stroke="#3b82f6" stroke-width="5" fill="transparent" stroke-dasharray="175" stroke-dashoffset="175" stroke-linecap="round" class="transition-all duration-500" />
@@ -126,7 +98,6 @@
                 <div>
                     <h3 class="font-bold text-white text-base">Thử Thách 365 Ngày</h3>
                     <p class="text-xs text-gray-400">Học tập đa ngôn ngữ mỗi ngày là chìa khóa mở cánh cửa tương lai</p>
-                    <!-- Date Pickers -->
                     <div class="flex items-center gap-2 mt-2">
                         <label class="text-[10px] text-gray-400">Bắt đầu:</label>
                         <input type="date" id="start-date-input" class="bg-gray-900 border border-gray-700 text-xs text-white rounded px-1.5 py-0.5 focus:outline-none focus:border-blue-500">
@@ -155,7 +126,6 @@
                     <span id="live-clock">00:00:00</span>
                 </div>
             </div>
-            
             <div class="grid grid-cols-2 gap-2 bg-gray-900 p-1 rounded-xl border border-gray-800">
                 <button id="btn-weekday" class="py-2 text-xs font-medium rounded-lg transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md">
                     <i data-lucide="calendar-days" class="w-3.5 h-3.5"></i> Ngày Thường
@@ -169,8 +139,7 @@
 
     <!-- Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- LEFT COLUMN: The Interactive 24-Hour Wheel SVG (Size optimized for desk layout) -->
+        <!-- LEFT COLUMN: Circle Dial SVG -->
         <div class="lg:col-span-6 xl:col-span-7 bg-darkCard border border-gray-800 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden min-h-[450px]">
             <div class="absolute top-4 left-4 z-10 flex items-center gap-2">
                 <span class="text-xs font-semibold bg-gray-900 border border-gray-800 px-2.5 py-1 rounded-full text-gray-300">Biểu đồ Tròn 24H</span>
@@ -181,43 +150,27 @@
                 </button>
             </div>
 
-            <!-- The Big Circle Visualization -->
             <div class="relative w-full max-w-[400px] aspect-square flex items-center justify-center mt-6">
-                <!-- SVG Circle Container -->
                 <svg id="schedule-svg" viewBox="0 0 500 500" class="w-full h-full transform transition-all duration-300">
                     <defs>
-                        <!-- Glow filters for highlighted tasks -->
                         <filter id="glow-heavy" x="-20%" y="-20%" width="140%" height="140%">
                             <feGaussianBlur stdDeviation="6" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
                     </defs>
-                    
-                    <!-- Background Rim / Outer Hour Indicators -->
                     <circle cx="250" cy="250" r="235" fill="transparent" stroke="#111827" stroke-width="12" />
-                    
-                    <!-- SVG Sectors will be dynamically injected here -->
                     <g id="sectors-group"></g>
-
-                    <!-- Inner Ring separator -->
                     <circle cx="250" cy="250" r="145" fill="none" stroke="#090d16" stroke-width="3" />
-
-                    <!-- Hour Numbers (1 to 24) on Outer Dial -->
                     <g id="hour-numbers-group" class="text-[10px] font-bold fill-gray-500 pointer-events-none select-none"></g>
-
-                    <!-- Interactive Needle pointer indicating the CURRENT hour -->
                     <line id="time-needle" x1="250" y1="250" x2="250" y2="40" stroke="#ef4444" stroke-width="3" stroke-linecap="round" class="hidden transition-all duration-500" />
                     <circle id="time-needle-hub" cx="250" cy="250" r="6" fill="#ef4444" class="hidden" />
                 </svg>
 
-                <!-- Central Information Hub inside the Donut Hole -->
                 <div class="absolute w-[240px] h-[240px] rounded-full bg-[#0b0f19] border border-gray-800/80 shadow-inner flex flex-col items-center justify-center text-center p-4 select-none pointer-events-none">
                     <div id="central-time-indicator" class="text-xs font-semibold text-gray-500 mb-0.5 tracking-wider">00:00 - 05:00</div>
                     <div id="central-task-title" class="text-base font-extrabold text-white line-clamp-2 max-w-[200px] leading-snug">Thời Gian Nghỉ Ngơi</div>
                     <div id="central-task-category" class="text-[10px] bg-slate-800 text-slate-300 font-bold px-2 py-0.5 rounded-full mt-1.5">NGỦ</div>
                     <div id="central-task-duration" class="text-[10px] text-gray-400 mt-2">Thời lượng: 5 giờ</div>
-                    
-                    <!-- Pulsing dynamic status matching currently active task -->
                     <div class="mt-3 flex items-center gap-1 text-[10px] text-green-400" id="current-badge-container">
                         <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-ping"></span>
                         <span>Đang diễn ra</span>
@@ -225,7 +178,6 @@
                 </div>
             </div>
 
-            <!-- Dynamic Category Legends underneath -->
             <div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 justify-center text-xs max-w-md">
                 <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-indigo-950 border border-indigo-700"></span><span class="text-gray-400 text-[11px]">Ngủ/Nghỉ</span></div>
                 <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-blue-600"></span><span class="text-gray-400 text-[11px]">Anh (TOEIC)</span></div>
@@ -236,45 +188,41 @@
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: Dashboard Tabs (Schedule List, Daily Progress Tracker, Editor) -->
+        <!-- RIGHT COLUMN: Dashboard & Sync Configuration -->
         <div class="lg:col-span-6 xl:col-span-5 flex flex-col gap-6">
-            
-            <!-- Cloud Sync Device Connection Card -->
+            <!-- New Local Sync Connection Card (Replaces Crash Firebase) -->
             <div class="bg-gradient-to-br from-indigo-950/40 to-slate-900 border border-indigo-500/20 rounded-2xl p-4 shadow-xl">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-2">
                         <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" id="sync-status-pulse" style="background-color: #ef4444;"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2" id="sync-status-dot" style="background-color: #ef4444;"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" id="sync-status-dot"></span>
                         </span>
                         <h3 class="font-extrabold text-white text-xs uppercase tracking-wider flex items-center gap-1.5">
-                            <i data-lucide="cloud" class="w-4 h-4 text-indigo-400"></i> Đồng bộ thiết bị (Cloud)
+                            <i data-lucide="smartphone" class="w-4 h-4 text-indigo-400"></i> Bảng Kết Nối Thiết Bị Vĩnh Viễn
                         </h3>
                     </div>
-                    <span id="sync-status-text" class="text-[10px] font-medium text-gray-400">Ngoại tuyến (Chỉ lưu máy này)</span>
+                    <span id="sync-status-text" class="text-[10px] font-bold text-emerald-400">Sẵn sàng liên kết</span>
                 </div>
 
                 <div class="space-y-3">
-                    <!-- Display current sync code -->
                     <div class="bg-gray-950/80 rounded-xl p-2.5 border border-gray-800 flex items-center justify-between">
                         <div>
-                            <div class="text-[10px] text-gray-500">Mã đồng bộ thiết bị của bạn:</div>
-                            <div id="sync-code-display" class="text-xs font-mono font-bold text-indigo-300 mt-0.5">Đang tải mã...</div>
+                            <div class="text-[10px] text-gray-500">Chuỗi dữ liệu đồng bộ của bạn:</div>
+                            <div id="sync-code-display" class="text-[11px] font-mono font-bold text-indigo-300 mt-0.5 truncate max-w-[220px]">Tải thành công</div>
                         </div>
-                        <button onclick="copySyncCode()" class="flex items-center gap-1 px-2.5 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-lg text-xs font-semibold text-indigo-300 transition-all">
-                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Sao chép
+                        <button onclick="copyDataSyncCode()" class="flex items-center gap-1 px-2.5 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-lg text-xs font-semibold text-indigo-300 transition-all shrink-0">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> Sao chép gói dữ liệu
                         </button>
                     </div>
 
-                    <!-- Connect with other code -->
                     <div class="flex gap-2">
-                        <input type="text" id="sync-code-input" placeholder="Dán mã thiết bị khác để kết nối..." class="flex-grow bg-gray-950 border border-gray-800 text-xs rounded-xl px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500">
-                        <button onclick="connectSyncCode()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-bold rounded-xl shadow-lg shadow-indigo-500/10 transition-all flex items-center gap-1">
-                            <i data-lucide="link" class="w-3.5 h-3.5"></i> Kết nối
+                        <input type="text" id="sync-code-input" placeholder="Dán chuỗi từ thiết bị khác vào đây..." class="flex-grow bg-gray-950 border border-gray-800 text-xs rounded-xl px-3 py-2 text-white placeholder-gray-600 focus:outline-none focus:border-indigo-500">
+                        <button onclick="connectDataSync()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs text-white font-bold rounded-xl shadow-lg shadow-indigo-500/10 transition-all flex items-center gap-1 shrink-0">
+                            <i data-lucide="check" class="w-3.5 h-3.5"></i> Ghi đè tiến độ
                         </button>
                     </div>
                     <p class="text-[10px] text-gray-400 leading-relaxed">
-                        💡 <strong>Cách đồng bộ:</strong> Chỉ cần sao chép mã ở trên, gửi qua điện thoại của bạn, dán vào ô "Kết nối" và bấm liên kết. Hai thiết bị sẽ đồng hành liên tục!
+                        💡 <strong>Cách đồng bộ lỗi mạng:</strong> Chỉ cần nhấn **Sao chép gói dữ liệu** ở thiết bị này, gửi chuỗi đó sang điện thoại qua Zalo/Messenger, rồi dán vào ô bên dưới bấm **Ghi đè tiến độ**. Toàn bộ lịch học, ô tích xanh (Checklist) sẽ nhảy sang ngay lập tức!
                     </p>
                 </div>
             </div>
@@ -282,7 +230,6 @@
             <!-- Highlight Task Details & Action Panel -->
             <div id="detail-card" class="bg-darkCard border border-gray-800 rounded-2xl p-5 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full pointer-events-none"></div>
-                
                 <div class="flex items-start gap-4">
                     <div id="detail-icon-bg" class="p-3 bg-blue-500/10 text-blue-400 rounded-xl">
                         <i id="detail-icon" data-lucide="book-open" class="w-6 h-6"></i>
@@ -293,13 +240,10 @@
                             <span id="detail-badge" class="text-[9px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-500/30">TOEIC</span>
                         </div>
                         <h2 id="detail-title" class="text-lg font-extrabold text-white mt-1">TOEIC Listening</h2>
-                        <p id="detail-desc" class="text-xs text-gray-300 mt-2 leading-relaxed">
-                            Khung giờ vàng sáng sớm khi không gian yên tĩnh và tai nhạy bén nhất. Tập trung luyện nghe các Part 1-4, ghi chép lỗi sai thường gặp.
-                        </p>
+                        <p id="detail-desc" class="text-xs text-gray-300 mt-2 leading-relaxed">Khung giờ vàng sáng sớm khi không gian yên tĩnh...</p>
                     </div>
                 </div>
 
-                <!-- Live Task Completion checklist toggle inside dashboard -->
                 <div class="mt-4 pt-4 border-t border-gray-800/80 flex items-center justify-between">
                     <div class="text-xs text-gray-400">Trạng thái hoàn thành ngày hôm nay:</div>
                     <button id="btn-complete-task" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 hover:bg-gray-800 border border-gray-700/80 text-xs text-gray-300 hover:text-white rounded-lg transition-all">
@@ -309,7 +253,7 @@
                 </div>
             </div>
 
-            <!-- Daily Checklist & Interactive Analytics -->
+            <!-- Daily Checklist Panel -->
             <div class="bg-darkCard border border-gray-800 rounded-2xl p-5 flex flex-col gap-4">
                 <div class="flex justify-between items-center border-b border-gray-800 pb-3">
                     <div class="flex items-center gap-2">
@@ -318,93 +262,68 @@
                     </div>
                     <span id="checklist-progress-text" class="text-xs font-semibold text-blue-400">0/0 Đã xong</span>
                 </div>
-
-                <!-- Interactive Checklist -->
-                <div id="checklist-container" class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
-                    <!-- Dynamic Checklist Items inserted here -->
-                </div>
-
-                <!-- Custom Progress Bar -->
+                <div id="checklist-container" class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1"></div>
                 <div class="bg-gray-900 border border-gray-800 p-3 rounded-xl flex items-center justify-between">
                     <div>
                         <div class="text-[11px] text-gray-400">Năng suất học ngày hôm nay</div>
                         <div class="text-sm font-extrabold text-white mt-0.5" id="daily-completion-percent">0% Hoàn Thành</div>
                     </div>
                     <div class="w-24 bg-gray-800 rounded-full h-2.5 relative overflow-hidden">
-                        <div id="daily-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                        <div id="daily-progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2.5 rounded-full transition-all" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Smart Advice / Science Tip Box -->
+            <!-- Advice Box -->
             <div class="bg-gradient-to-r from-slate-900 to-indigo-950/40 border border-gray-800/80 rounded-2xl p-4 flex gap-3.5 items-start">
                 <div class="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg shrink-0">
                     <i data-lucide="sparkles" class="w-5 h-5"></i>
                 </div>
                 <div>
                     <h4 class="text-xs font-bold text-white uppercase tracking-wider">Lời khuyên khoa học</h4>
-                    <p class="text-xs text-gray-300 mt-1 leading-relaxed" id="science-tip">
+                    <p class="text-xs text-gray-300 mt-1 leading-relaxed">
                         Sử dụng khoảng nghỉ trưa dài 3 tiếng từ 11:00 đến 14:00 để não bộ xoá bỏ "bộ nhớ đệm" tiếng Nhật buổi sáng, giúp tiếp thu tiếng Trung buổi chiều mà không bị nhầm lẫn Kanji.
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
 </main>
 
-<!-- Modal: Task Editor Form (Triggered via "Sửa Lịch Trình" button) -->
+<!-- Modal: Task Editor Form -->
 <div id="edit-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
     <div class="bg-darkCard border border-gray-800 rounded-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-950/60">
             <h3 class="font-extrabold text-white flex items-center gap-2 text-sm">
                 <i data-lucide="sliders" class="w-4 h-4 text-blue-500"></i> Điều Chỉnh Khung Giờ
             </h3>
-            <button onclick="toggleEditMode()" class="p-1 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-all">
+            <button onclick="toggleEditMode()" class="p-1 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
-        
-        <!-- Task List Editor Container -->
-        <div class="p-4 overflow-y-auto space-y-3 flex-grow" id="editor-form-container">
-            <!-- Dynamic edit inputs for each block -->
-        </div>
-
+        <div class="p-4 overflow-y-auto space-y-3 flex-grow" id="editor-form-container"></div>
         <div class="p-4 border-t border-gray-800 bg-gray-950/60 flex justify-between gap-3">
-            <button onclick="resetToDefaults()" class="px-3 py-1.5 bg-gray-900 border border-gray-800 text-xs text-red-400 hover:bg-gray-800 rounded-xl transition-all">
-                Đặt lại Mặc định
-            </button>
+            <button onclick="resetToDefaults()" class="px-3 py-1.5 bg-gray-900 border border-gray-800 text-xs text-red-400 hover:bg-gray-800 rounded-xl">Đặt lại Mặc định</button>
             <div class="flex gap-2">
-                <button onclick="toggleEditMode()" class="px-4 py-1.5 bg-gray-800 text-xs text-gray-300 hover:text-white rounded-xl transition-all">
-                    Hủy bỏ
-                </button>
-                <button onclick="saveAllEdits()" class="px-4 py-1.5 bg-blue-600 text-xs text-white font-bold hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-500/20 transition-all">
-                    Lưu thay đổi
-                </button>
+                <button onclick="toggleEditMode()" class="px-4 py-1.5 bg-gray-800 text-xs text-gray-300 hover:text-white rounded-xl">Hủy bỏ</button>
+                <button onclick="saveAllEdits()" class="px-4 py-1.5 bg-blue-600 text-xs text-white font-bold hover:bg-blue-500 rounded-xl">Lưu thay đổi</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Simple Notification Pop-up -->
 <div id="toast-notif" class="fixed bottom-5 right-5 z-50 bg-indigo-600 border border-indigo-500 text-white font-semibold text-xs rounded-xl px-4 py-2.5 shadow-xl transition-all duration-300 translate-y-20 opacity-0 flex items-center gap-2">
     <i data-lucide="bell" class="w-4 h-4"></i>
     <span id="toast-text">Đã đồng bộ thành công!</span>
 </div>
 
-<!-- Footer block -->
 <footer class="border-t border-gray-900 bg-black/40 py-4 mt-8">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500">
         Thiết kế tối ưu theo mô hình khoa học thần kinh học tập. Hãy duy trì đều đặn 365 ngày để gặt hái kết quả xuất sắc!
     </div>
 </footer>
 
-<!-- Firebase Modular SDK & App Script Logic -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
     // --- DEFAULT SCHEDULE DATA ---
     const DEFAULTS_WEEKDAY = [
         { id: 'w1', start: 0, end: 5, name: 'Ngủ đêm (Phần 1)', category: 'sleep', desc: 'Ngủ ngon để phục hồi các tế bào não bộ và gia cố trí nhớ.' },
@@ -414,12 +333,12 @@
         { id: 'w5', start: 7.5, end: 8.5, name: 'Ăn sáng & Thư giãn', category: 'rest', desc: 'Ăn sáng lành mạnh để nạp năng lượng cho các ca học tiếp theo.' },
         { id: 'w6', start: 8.5, end: 10, name: 'JLPT Kanji & Ngữ pháp 🇯🇵', category: 'japanese', desc: 'Tập trung cao độ cho chữ Hán và các mẫu ngữ pháp N1/N2 mới.' },
         { id: 'w7', start: 10, end: 11, name: 'Đọc hiểu Tiếng Nhật 🇯🇵', category: 'japanese', desc: 'Đọc tin tức NHK Easy, các bài luận ngắn rèn tốc độ quét mắt lọc thông tin.' },
-        { id: 'w8', start: 11, end: 14, name: 'Ăn trưa & Nghỉ trưa dài', category: 'rest', desc: 'Tách biệt tuyệt đối hai ca ngoại ngữ bằng giấc ngủ trưa 30 phút, để não bộ giải toả bộ nhớ đệm.' },
-        { id: 'w9', start: 14, end: 15.3, name: 'HSK Từ vựng & Ngữ pháp 🇨🇳', category: 'chinese', desc: 'Học từ vựng HSK 5 và áp dụng cách tạo dựng câu văn Trung Quốc thực tế.' },
-        { id: 'w10', start: 15.3, end: 16.5, name: 'Luyện nghe Tiếng Trung 🇨🇳', category: 'chinese', desc: 'Nghe Podcast, xem video ngắn bằng tiếng Trung không phụ đề.' },
+        { id: 'w8', start: 11, end: 14, name: 'Ăn trưa & Nghỉ trưa dài', category: 'rest', desc: 'Tách biệt tuyệt đối hai ca ngoại ngữ bằng giấc ngủ trưa 30 phút.' },
+        { id: 'w9', start: 14, end: 15.5, name: 'HSK Từ vựng & Ngữ pháp 🇨🇳', category: 'chinese', desc: 'Học từ vựng HSK 5 và áp dụng cách tạo dựng câu văn Trung Quốc thực tế.' },
+        { id: 'w10', start: 15.5, end: 16.5, name: 'Luyện nghe Tiếng Trung 🇨🇳', category: 'chinese', desc: 'Nghe Podcast, xem video ngắn bằng tiếng Trung không phụ đề.' },
         { id: 'w11', start: 16.5, end: 17.75, name: 'Thể thao & Tắm rửa', category: 'personal', desc: 'Thể chất tốt giúp nâng tầm năng lực tiếp thu trí óc.' },
         { id: 'w12', start: 17.75, end: 19.5, name: 'Ăn tối & Nghỉ ngơi', category: 'rest', desc: 'Ăn tối nhẹ nhàng cùng người thân hoặc nghe nhạc thư giãn.' },
-        { id: 'w13', start: 19.5, end: 20.5, name: 'Luyện tập Anki (Bộ từ vựng) 🧠', category: 'review', desc: 'Lặp lại ngắt quãng để ghi nhớ sâu các từ khó của cả 3 ngôn ngữ đã học hôm nay.' },
+        { id: 'w13', start: 19.5, end: 20.5, name: 'Luyện tập Anki (Bộ từ vựng) 🧠', category: 'review', desc: 'Lặp lại ngắt quãng để ghi nhớ sâu các từ khó của cả 3 ngôn ngữ.' },
         { id: 'w14', start: 20.5, end: 21, name: 'Đọc tự do ngoại ngữ 📚', category: 'reading', desc: 'Chọn một quyển sách, truyện tranh hoặc bài báo bất kỳ để đọc thảnh thơi.' },
         { id: 'w15', start: 21, end: 22.5, name: 'Thư giãn (Không màn hình) 🧘‍♂️', category: 'rest', desc: 'Rời xa màn hình điện thoại/laptop để chuẩn bị cho giấc ngủ sâu lành mạnh.' },
         { id: 'w16', start: 22.5, end: 24, name: 'Ngủ đêm (Phần 2)', category: 'sleep', desc: 'Chìm vào giấc ngủ sâu trước 23h00 để phục hồi tốt nhất.' }
@@ -429,9 +348,9 @@
         { id: 'e1', start: 0, end: 6, name: 'Giấc ngủ ngon lành', category: 'sleep', desc: 'Phục hồi toàn diện năng lượng sau một tuần học tập mệt mỏi.' },
         { id: 'e2', start: 6, end: 7, name: 'Vệ sinh & Khởi động sáng', category: 'personal', desc: 'Tập thể dục nhẹ buổi sáng cuối tuần.' },
         { id: 'e3', start: 7, end: 8, name: 'Ăn sáng nạp năng lượng', category: 'rest', desc: 'Thưởng thức bữa sáng thảnh thơi.' },
-        { id: 'e4', start: 8, end: 11.5, name: 'Thi thử Mock-Test tổng hợp 📝', category: 'english', desc: 'Giải đề thi thử TOEIC/JLPT/HSK xoay tua để làm quen áp lực phòng thi.' },
+        { id: 'e4', start: 8, end: 11.5, name: 'Thi thử Mock-Test tổng hợp 📝', category: 'english', desc: 'Giải đề thi thử TOEIC/JLPT/HSK xoay tua.' },
         { id: 'e5', start: 11.5, end: 13.5, name: 'Ăn trưa & Nghỉ trưa', category: 'rest', desc: 'Ăn ngon và ngủ trưa ngắn tái tạo năng lượng.' },
-        { id: 'e6', start: 13.5, end: 15.5, name: 'Lọc lỗi sai & Sửa đề 🧐', category: 'review', desc: 'Phần tối quan trọng: Ghi chép chi tiết tất cả lỗi sai trong bài thi thử ban sáng.' },
+        { id: 'e6', start: 13.5, end: 15.5, name: 'Lọc lỗi sai & Sửa đề 🧐', category: 'review', desc: 'Ghi chép chi tiết tất cả lỗi sai trong bài thi thử ban sáng.' },
         { id: 'e7', start: 15.5, end: 17, name: 'Đọc bổ sung tài liệu 📖', category: 'reading', desc: 'Đọc báo ngoại ngữ dài hoặc tài liệu chuyên ngành sâu hơn.' },
         { id: 'e8', start: 17, end: 18.5, name: 'Thể chất & Chạy bộ', category: 'personal', desc: 'Vận động ngoài trời thanh lọc tinh thần.' },
         { id: 'e9', start: 18.5, end: 20, name: 'Ăn tối ấm cúng', category: 'rest', desc: 'Dành thời gian chất lượng bên người thân hoặc bạn bè.' },
@@ -440,7 +359,6 @@
         { id: 'e12', start: 22.5, end: 24, name: 'Ngủ sâu lấy sức', category: 'sleep', desc: 'Ngủ sớm để chào đón tuần mới căng tràn sức trẻ.' }
     ];
 
-    // Category Styling Definitions
     const CATEGORIES = {
         sleep: { color: '#1e1b4b', hoverColor: '#312e81', textColor: '#cbd5e1', label: 'Giấc ngủ', icon: 'moon' },
         personal: { color: '#059669', hoverColor: '#10b981', textColor: '#ecfdf5', label: 'Thể chất/Cá nhân', icon: 'dumbbell' },
@@ -452,56 +370,28 @@
         reading: { color: '#0891b2', hoverColor: '#06b6d4', textColor: '#ecfeff', label: 'Đọc tự do', icon: 'book' }
     };
 
-    // --- APPLICATION STATE VARIABLES ---
-    let currentScheduleType = 'weekday'; // 'weekday' | 'weekend'
+    let currentScheduleType = 'weekday'; 
     let scheduleData = { weekday: [], weekend: [] };
-    let checklistStates = {}; // key: YYYY-MM-DD => { taskId: true/false }
+    let checklistStates = {}; 
     let selectedTaskId = null;
 
-    // Cloud syncing variables
-    let currentSyncCode = '';
-    let isCloudInitialized = false;
-    let isRemoteUpdateInProgress = false;
-    let db = null;
-    let auth = null;
-    let unsubscribeSync = null;
-
-    // Global configurations provided by the environment
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'schedule-365';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-    // Polar conversion calculations
     function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
         let angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
-        return {
-            x: centerX + (radius * Math.cos(angleInRadians)),
-            y: centerY + (radius * Math.sin(angleInRadians))
-        };
+        return { x: centerX + (radius * Math.cos(angleInRadians)), y: centerY + (radius * Math.sin(angleInRadians)) };
     }
 
     function describeArc(x, y, innerRadius, outerRadius, startHour, endHour) {
         let startAngle = startHour * 15;
         let endAngle = endHour * 15;
         if (endAngle - startAngle === 360) endAngle -= 0.01;
-
         let start_outer = polarToCartesian(x, y, outerRadius, startAngle);
         let end_outer = polarToCartesian(x, y, outerRadius, endAngle);
         let start_inner = polarToCartesian(x, y, innerRadius, startAngle);
         let end_inner = polarToCartesian(x, y, innerRadius, endAngle);
-
         let largeArcFlag = (endAngle - startAngle) <= 180 ? "0" : "1";
-
-        return [
-            "M", start_outer.x, start_outer.y,
-            "A", outerRadius, outerRadius, 0, largeArcFlag, 1, end_outer.x, end_outer.y,
-            "L", end_inner.x, end_inner.y,
-            "A", innerRadius, innerRadius, 0, largeArcFlag, 0, start_inner.x, start_inner.y,
-            "Z"
-        ].join(" ");
+        return ["M", start_outer.x, start_outer.y, "A", outerRadius, outerRadius, 0, largeArcFlag, 1, end_outer.x, end_outer.y, "L", end_inner.x, end_inner.y, "A", innerRadius, innerRadius, 0, largeArcFlag, 0, start_inner.x, start_inner.y, "Z"].join(" ");
     }
 
-    // Dynamic Render of the Big 24 Hour Dial and its Interactive Hand Pointer
     function renderScheduleCircle() {
         const sectorsGroup = document.getElementById('sectors-group');
         sectorsGroup.innerHTML = '';
@@ -510,7 +400,6 @@
         data.forEach(task => {
             const cat = CATEGORIES[task.category] || CATEGORIES.rest;
             const pathData = describeArc(250, 250, 150, 225, task.start, task.end);
-            
             const pathNode = document.createElementNS("http://www.w3.org/2000/svg", "path");
             pathNode.setAttribute("d", pathData);
             pathNode.setAttribute("fill", cat.color);
@@ -520,25 +409,19 @@
             pathNode.setAttribute("class", "transition-all duration-300 cursor-pointer hover:brightness-125");
             pathNode.style.transformOrigin = "250px 250px";
 
-            pathNode.addEventListener('click', () => {
-                selectTask(task);
-            });
-
+            pathNode.addEventListener('click', () => selectTask(task));
             pathNode.addEventListener('mouseover', () => {
                 updateCentralHub(task, false);
                 pathNode.setAttribute("fill", cat.hoverColor);
                 pathNode.style.filter = "url(#glow-heavy)";
             });
-
             pathNode.addEventListener('mouseout', () => {
                 pathNode.setAttribute("fill", cat.color);
                 pathNode.style.filter = "none";
                 updateCentralToCurrentActive();
             });
-
             sectorsGroup.appendChild(pathNode);
         });
-
         renderDialNumbers();
     }
 
@@ -574,15 +457,10 @@
         catBadge.style.color = cat.hoverColor;
         catBadge.style.borderColor = `${cat.color}66`;
 
-        const hrs = task.end - task.start;
-        document.getElementById('central-task-duration').textContent = `Thời lượng: ${hrs} giờ`;
-
+        document.getElementById('central-task-duration').textContent = `Thời lượng: ${task.end - task.start} giờ`;
         const currentBadge = document.getElementById('current-badge-container');
-        if (isCurrentlyActive) {
-            currentBadge.classList.remove('hidden');
-        } else {
-            currentBadge.classList.add('hidden');
-        }
+        if (isCurrentlyActive) currentBadge.classList.remove('hidden');
+        else currentBadge.classList.add('hidden');
     }
 
     function highlightSlice(taskId, isHighlighted) {
@@ -600,7 +478,6 @@
         }
     }
 
-    // Handling Dashboard Updates and Selections
     function selectTask(task) {
         selectedTaskId = task.id;
         document.getElementById('detail-title').textContent = task.name;
@@ -646,17 +523,14 @@
     }
 
     function getActiveTaskForHour(decimalHour) {
-        const data = scheduleData[currentScheduleType];
-        return data.find(t => decimalHour >= t.start && decimalHour < t.end);
+        return scheduleData[currentScheduleType].find(t => decimalHour >= t.start && decimalHour < t.end);
     }
 
     function updateCentralToCurrentActive() {
         const now = new Date();
         const currentDecimalHour = now.getHours() + now.getMinutes() / 60;
         const activeTask = getActiveTaskForHour(currentDecimalHour);
-        if (activeTask) {
-            updateCentralHub(activeTask, true);
-        }
+        if (activeTask) updateCentralHub(activeTask, true);
     }
 
     function getTodayDateString() {
@@ -664,16 +538,13 @@
         return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
     }
 
-    // Render the dynamic Checklist Panel
     function renderChecklist() {
         const container = document.getElementById('checklist-container');
         container.innerHTML = '';
         const data = scheduleData[currentScheduleType];
         const todayStr = getTodayDateString();
         
-        if (!checklistStates[todayStr]) {
-            checklistStates[todayStr] = {};
-        }
+        if (!checklistStates[todayStr]) checklistStates[todayStr] = {};
 
         let completedCount = 0;
         data.forEach(task => {
@@ -682,9 +553,7 @@
 
             const cat = CATEGORIES[task.category] || CATEGORIES.rest;
             const item = document.createElement('div');
-            item.className = `p-3 rounded-xl flex items-center justify-between border transition-all cursor-pointer select-none ${
-                isDone ? 'bg-slate-900/40 border-gray-800 opacity-60' : 'bg-gray-900/80 border-gray-800 hover:border-gray-700'
-            }`;
+            item.className = `p-3 rounded-xl flex items-center justify-between border transition-all cursor-pointer select-none ${isDone ? 'bg-slate-900/40 border-gray-800 opacity-60' : 'bg-gray-900/80 border-gray-800 hover:border-gray-700'}`;
             
             item.innerHTML = `
                 <div class="flex items-center gap-3 flex-grow">
@@ -701,14 +570,8 @@
 
             item.addEventListener('mouseenter', () => highlightSlice(task.id, true));
             item.addEventListener('mouseleave', () => highlightSlice(task.id, false));
-            item.querySelector('.check-toggle').addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleTaskChecked(task.id);
-            });
-            item.addEventListener('click', () => {
-                selectTask(task);
-            });
-
+            item.querySelector('.check-toggle').addEventListener('click', (e) => { e.stopPropagation(); toggleTaskChecked(task.id); });
+            item.addEventListener('click', () => selectTask(task));
             container.appendChild(item);
         });
 
@@ -716,61 +579,34 @@
         const percentage = data.length > 0 ? Math.round((completedCount / data.length) * 100) : 0;
         document.getElementById('daily-completion-percent').textContent = `${percentage}% Hoàn Thành`;
         document.getElementById('daily-progress-bar').style.width = `${percentage}%`;
-
         lucide.createIcons();
+        refreshLiveSyncString();
     }
 
     function toggleTaskChecked(taskId) {
         const todayStr = getTodayDateString();
-        if (!checklistStates[todayStr]) {
-            checklistStates[todayStr] = {};
-        }
+        if (!checklistStates[todayStr]) checklistStates[todayStr] = {};
         const isCurrentlyDone = !!checklistStates[todayStr][taskId];
         checklistStates[todayStr][taskId] = !isCurrentlyDone;
 
         saveChecklistToStorage();
         renderChecklist();
-        uploadDataToCloud(); // sync up immediately
 
-        if (selectedTaskId === taskId) {
-            updateChecklistButtonState(!isCurrentlyDone);
-        }
-
+        if (selectedTaskId === taskId) updateChecklistButtonState(!isCurrentlyDone);
         const data = scheduleData[currentScheduleType];
         const completedCount = Object.values(checklistStates[todayStr]).filter(Boolean).length;
-        if (completedCount === data.length && !isCurrentlyDone) {
-            triggerConfetti();
-        }
+        if (completedCount === data.length && !isCurrentlyDone) confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
 
-    function triggerConfetti() {
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-    }
-
-    // Handles local caching in case cloud offline or fallback
-    function saveChecklistToStorage() {
-        localStorage.setItem('365_daily_checklist', JSON.stringify(checklistStates));
-    }
-
-    function loadChecklistFromStorage() {
-        const data = localStorage.getItem('365_daily_checklist');
-        if (data) {
-            checklistStates = JSON.parse(data);
-        }
-    }
-
-    function saveScheduleDataToStorage() {
-        localStorage.setItem('365_schedule_data', JSON.stringify(scheduleData));
-    }
+    function saveChecklistToStorage() { localStorage.setItem('365_daily_checklist', JSON.stringify(checklistStates)); }
+    function loadChecklistFromStorage() { const data = localStorage.getItem('365_daily_checklist'); if (data) checklistStates = JSON.parse(data); }
+    function saveScheduleDataToStorage() { localStorage.setItem('365_schedule_data', JSON.stringify(scheduleData)); }
 
     function loadScheduleData() {
         const local = localStorage.getItem('365_schedule_data');
         if (local) {
-            try {
-                scheduleData = JSON.parse(local);
-            } catch(e) {
-                scheduleData = { weekday: [...DEFAULTS_WEEKDAY], weekend: [...DEFAULTS_WEEKEND] };
-            }
+            try { scheduleData = JSON.parse(local); } 
+            catch(e) { scheduleData = { weekday: [...DEFAULTS_WEEKDAY], weekend: [...DEFAULTS_WEEKEND] }; }
         } else {
             scheduleData = { weekday: [...DEFAULTS_WEEKDAY], weekend: [...DEFAULTS_WEEKEND] };
         }
@@ -779,7 +615,6 @@
     function updateCountdownDashboard() {
         const startDateInput = document.getElementById('start-date-input');
         let startDateVal = localStorage.getItem('365_start_date');
-        
         if (!startDateVal) {
             const d = new Date();
             startDateVal = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
@@ -789,242 +624,80 @@
 
         const start = new Date(startDateVal);
         const today = new Date();
-        start.setHours(0,0,0,0);
-        today.setHours(0,0,0,0);
+        start.setHours(0,0,0,0); today.setHours(0,0,0,0);
 
         const diffTime = today.getTime() - start.getTime();
         let daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        if (daysPassed < 1) daysPassed = 1;
-        if (daysPassed > 365) daysPassed = 365;
-
-        const daysRemaining = 365 - daysPassed;
-        const progressPct = Math.round((daysPassed / 365) * 100);
+        if (daysPassed < 1) daysPassed = 1; if (daysPassed > 365) daysPassed = 365;
 
         document.getElementById('days-passed').innerHTML = `${daysPassed} <span class="text-sm font-normal text-gray-400">/ 365 ngày</span>`;
-        document.getElementById('days-remaining').textContent = daysRemaining;
+        document.getElementById('days-remaining').textContent = 365 - daysPassed;
+        const progressPct = Math.round((daysPassed / 365) * 100);
         document.getElementById('days-percent').textContent = `${progressPct}%`;
 
         const circle = document.getElementById('goal-progress-circle');
-        const totalLength = 2 * Math.PI * 28;
-        const strokeOffset = totalLength - (progressPct / 100) * totalLength;
-        circle.style.strokeDashoffset = strokeOffset;
+        circle.style.strokeDashoffset = 175 - (progressPct / 100) * 175;
     }
 
-    // Connect event listener
     document.getElementById('start-date-input').addEventListener('change', (e) => {
         localStorage.setItem('365_start_date', e.target.value);
         updateCountdownDashboard();
-        uploadDataToCloud();
+        refreshLiveSyncString();
     });
 
-    // Set up real-time cross-device data pipeline using Firestore (RULE 1 & 3 Compliance)
-    async function initCloudSync() {
-        if (!firebaseConfig) {
-            console.log("No Firebase config detected. Running on Local mode.");
-            return;
-        }
+    // --- NEW LOCAL ENCODED SYNC PIPELINE (100% RELIABLE) ---
+    function refreshLiveSyncString() {
+        const packageData = {
+            sd: scheduleData,
+            cl: checklistStates,
+            date: localStorage.getItem('365_start_date') || ''
+        };
+        const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(packageData))));
+        document.getElementById('sync-code-display').textContent = encoded;
+    }
 
+    function copyDataSyncCode() {
+        const txt = document.getElementById('sync-code-display').textContent;
+        const el = document.createElement("input");
+        el.value = txt; document.body.appendChild(el);
+        el.select(); document.execCommand("copy");
+        document.body.removeChild(el);
+        showToast("Đã sao chép gói tiến độ!");
+    }
+
+    function connectDataSync() {
+        const rawInput = document.getElementById('sync-code-input').value.trim();
+        if(!rawInput) { showToast("Vui lòng dán gói dữ liệu!"); return; }
         try {
-            // Initialize SDK
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-
-            // Handle Authentication (RULE 3 Priority)
-            let userCredential;
-            if (initialAuthToken) {
-                userCredential = await signInWithCustomToken(auth, initialAuthToken);
-            } else {
-                userCredential = await signInAnonymously(auth);
-            }
-
-            const user = userCredential.user;
-            if (!user) return;
-
-            // Load or initialize sync code
-            let savedSyncCode = localStorage.getItem('365_active_sync_code');
-            if (!savedSyncCode) {
-                savedSyncCode = user.uid; // Default to Auth User ID
-                localStorage.setItem('365_active_sync_code', savedSyncCode);
-            }
-
-            currentSyncCode = savedSyncCode;
-            document.getElementById('sync-code-display').textContent = currentSyncCode;
-
-            // Update UI status to Online
-            updateSyncStatusUI(true);
-            isCloudInitialized = true;
-
-            // Start Listening for remote changes
-            setupFirestoreListener();
-
-        } catch (error) {
-            console.error("Firebase Initialization Error:", error);
-            updateSyncStatusUI(false);
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(rawInput))));
+            if (decoded.sd) scheduleData = decoded.sd;
+            if (decoded.cl) checklistStates = decoded.cl;
+            if (decoded.date) localStorage.setItem('365_start_date', decoded.date);
+            
+            saveScheduleDataToStorage();
+            saveChecklistToStorage();
+            
+            renderScheduleCircle();
+            renderChecklist();
+            updateCountdownDashboard();
+            updateCentralToCurrentActive();
+            document.getElementById('sync-code-input').value = '';
+            showToast("Đồng bộ ghi đè thành công!");
+        } catch(e) {
+            showToast("Mã dữ liệu không hợp lệ, hãy thử lại!");
         }
-    }
-
-    function updateSyncStatusUI(isOnline) {
-        const dot = document.getElementById('sync-status-dot');
-        const pulse = document.getElementById('sync-status-pulse');
-        const text = document.getElementById('sync-status-text');
-
-        if (isOnline) {
-            dot.style.backgroundColor = '#10b981'; // Green
-            pulse.style.backgroundColor = '#10b981';
-            text.textContent = 'Đã kết nối Đám mây (Đồng bộ thời gian thực)';
-            text.className = "text-[10px] font-bold text-emerald-400";
-        } else {
-            dot.style.backgroundColor = '#f43f5e'; // Red
-            pulse.style.backgroundColor = '#f43f5e';
-            text.textContent = 'Ngoại tuyến (Chỉ lưu máy này)';
-            text.className = "text-[10px] font-medium text-gray-400";
-        }
-    }
-
-    function setupFirestoreListener() {
-        if (!db || !currentSyncCode) return;
-
-        // Unsubscribe old listeners if any
-        if (unsubscribeSync) {
-            unsubscribeSync();
-        }
-
-        // Establish strict compliant path: /artifacts/{appId}/public/data/user_schedules/{syncCode} (RULE 1)
-        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'user_schedules', currentSyncCode);
-
-        unsubscribeSync = onSnapshot(docRef, (docSnap) => {
-            if (docSnap.exists()) {
-                const cloudData = docSnap.data();
-                
-                // Block remote echo to prevent write feedback loop
-                if (cloudData.updatedByClientId === getClientId()) {
-                    return;
-                }
-
-                // Update Local state with cloud values
-                isRemoteUpdateInProgress = true;
-
-                if (cloudData.scheduleData) {
-                    scheduleData = cloudData.scheduleData;
-                    saveScheduleDataToStorage();
-                }
-                if (cloudData.checklistStates) {
-                    checklistStates = cloudData.checklistStates;
-                    saveChecklistToStorage();
-                }
-                if (cloudData.startDate) {
-                    localStorage.setItem('365_start_date', cloudData.startDate);
-                }
-
-                // Refresh UI Dashboard
-                renderScheduleCircle();
-                renderChecklist();
-                updateCountdownDashboard();
-                updateCentralToCurrentActive();
-
-                // Auto-select first active schedule
-                const initialTasks = scheduleData[currentScheduleType];
-                if (initialTasks && initialTasks.length > 0) {
-                    selectTask(initialTasks[0]);
-                }
-
-                isRemoteUpdateInProgress = false;
-                showToast("Dữ liệu đã được đồng bộ hóa!");
-            } else {
-                // If cloud document is completely empty, upload local backup
-                uploadDataToCloud();
-            }
-        }, (error) => {
-            console.error("Cloud syncing failed:", error);
-            updateSyncStatusUI(false);
-        });
-    }
-
-    async function uploadDataToCloud() {
-        if (!isCloudInitialized || !db || !currentSyncCode || isRemoteUpdateInProgress) return;
-
-        try {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'user_schedules', currentSyncCode);
-            await setDoc(docRef, {
-                scheduleData: scheduleData,
-                checklistStates: checklistStates,
-                startDate: localStorage.getItem('365_start_date') || '',
-                updatedAt: Date.now(),
-                updatedByClientId: getClientId()
-            });
-        } catch (error) {
-            console.error("Failed to upload state to Cloud:", error);
-        }
-    }
-
-    // Client ID to avoid self-overwrite bounce-back loop
-    function getClientId() {
-        let clientId = sessionStorage.getItem('365_client_uuid');
-        if (!clientId) {
-            clientId = crypto.randomUUID();
-            sessionStorage.setItem('365_client_uuid', clientId);
-        }
-        return clientId;
-    }
-
-    // Connecting to another device sync code
-    function connectSyncCode() {
-        const inputEl = document.getElementById('sync-code-input');
-        const code = inputEl.value.trim();
-
-        if (!code) {
-            showToast("Vui lòng nhập mã đồng bộ!");
-            return;
-        }
-
-        if (code === currentSyncCode) {
-            showToast("Bạn đã kết nối mã này rồi!");
-            return;
-        }
-
-        // Switch Sync Codes
-        currentSyncCode = code;
-        localStorage.setItem('365_active_sync_code', code);
-        document.getElementById('sync-code-display').textContent = code;
-
-        showToast("Đang đồng bộ với thiết bị mới...");
-        inputEl.value = '';
-
-        if (isCloudInitialized) {
-            setupFirestoreListener();
-        }
-    }
-
-    function copySyncCode() {
-        const copyText = currentSyncCode;
-        
-        // Secure clipboard fallback within frames
-        const tempInput = document.createElement("input");
-        tempInput.value = copyText;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-
-        showToast("Đã sao chép mã liên kết!");
     }
 
     function showToast(message) {
         const toast = document.getElementById('toast-notif');
         document.getElementById('toast-text').textContent = message;
         toast.classList.remove('translate-y-20', 'opacity-0');
-        
-        setTimeout(() => {
-            toast.classList.add('translate-y-20', 'opacity-0');
-        }, 3000);
+        setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
     }
 
-    // Open/Close editor Modal
     function toggleEditMode() {
         const modal = document.getElementById('edit-modal');
-        const isHidden = modal.classList.contains('pointer-events-none');
-        if (isHidden) {
+        if (modal.classList.contains('pointer-events-none')) {
             buildEditorForm();
             modal.classList.remove('opacity-0', 'pointer-events-none');
         } else {
@@ -1035,44 +708,30 @@
     function buildEditorForm() {
         const container = document.getElementById('editor-form-container');
         container.innerHTML = '';
-        const data = scheduleData[currentScheduleType];
-        
-        data.forEach((task, idx) => {
+        scheduleData[currentScheduleType].forEach((task, idx) => {
             const item = document.createElement('div');
             item.className = "bg-gray-900/60 p-3 rounded-xl border border-gray-800 space-y-2.5";
-            
             let catOptions = '';
             Object.keys(CATEGORIES).forEach(key => {
                 catOptions += `<option value="${key}" ${task.category === key ? 'selected' : ''}>${CATEGORIES[key].label}</option>`;
             });
-
             item.innerHTML = `
                 <div class="flex items-center justify-between gap-2 border-b border-gray-800 pb-2">
                     <span class="text-xs font-bold text-blue-400">Khung giờ #${idx + 1}</span>
-                    <select class="field-category bg-gray-950 border border-gray-800 text-[10px] text-gray-300 rounded px-1 py-0.5 focus:outline-none">
+                    <select class="field-category bg-gray-950 border border-gray-800 text-[10px] text-gray-300 rounded px-1 py-0.5">
                         ${catOptions}
                     </select>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div>
-                        <label class="text-[10px] text-gray-500 block mb-0.5">Tên hoạt động</label>
-                        <input type="text" class="field-name w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 focus:outline-none focus:border-blue-500 text-white" value="${task.name}">
+                        <input type="text" class="field-name w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 text-white" value="${task.name}">
                     </div>
                     <div class="grid grid-cols-2 gap-1.5">
-                        <div>
-                            <label class="text-[10px] text-gray-500 block mb-0.5">Bắt đầu (Giờ)</label>
-                            <input type="number" step="0.5" min="0" max="24" class="field-start w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 focus:outline-none focus:border-blue-500 text-white" value="${task.start}">
-                        </div>
-                        <div>
-                            <label class="text-[10px] text-gray-500 block mb-0.5">Kết thúc (Giờ)</label>
-                            <input type="number" step="0.5" min="0" max="24" class="field-end w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 focus:outline-none focus:border-blue-500 text-white" value="${task.end}">
-                        </div>
+                        <input type="number" step="0.5" class="field-start w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 text-white" value="${task.start}">
+                        <input type="number" step="0.5" class="field-end w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 text-white" value="${task.end}">
                     </div>
                 </div>
-                <div>
-                    <label class="text-[10px] text-gray-500 block mb-0.5">Chi tiết mô tả</label>
-                    <textarea class="field-desc w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 focus:outline-none focus:border-blue-500 text-gray-300 h-10 resize-none">${task.desc || ''}</textarea>
-                </div>
+                <textarea class="field-desc w-full bg-gray-950 border border-gray-800 text-xs rounded px-2 py-1 text-gray-300 h-10 resize-none">${task.desc || ''}</textarea>
                 <input type="hidden" class="field-id" value="${task.id}">
             `;
             container.appendChild(item);
@@ -1083,158 +742,76 @@
         const container = document.getElementById('editor-form-container');
         const items = container.querySelectorAll('.bg-gray-900\\/60');
         const newTasks = [];
-
         items.forEach(item => {
-            const id = item.querySelector('.field-id').value;
-            const name = item.querySelector('.field-name').value;
-            const start = parseFloat(item.querySelector('.field-start').value);
-            const end = parseFloat(item.querySelector('.field-end').value);
-            const category = item.querySelector('.field-category').value;
-            const desc = item.querySelector('.field-desc').value;
-
-            newTasks.push({ id, name, start, end, category, desc });
+            newTasks.push({
+                id: item.querySelector('.field-id').value,
+                name: item.querySelector('.field-name').value,
+                start: parseFloat(item.querySelector('.field-start').value),
+                end: parseFloat(item.querySelector('.field-end').value),
+                category: item.querySelector('.field-category').value,
+                desc: item.querySelector('.field-desc').value
+            });
         });
-
-        // Simple input validation
-        for (let task of newTasks) {
-            if (task.start < 0 || task.start > 24 || task.end < 0 || task.end > 24) {
-                showToast("Thời gian nhập vào phải ở khoảng 0 đến 24 giờ.");
-                return;
-            }
-            if (task.start >= task.end) {
-                showToast(`Lỗi: Giờ bắt đầu phải nhỏ hơn giờ kết thúc ở "${task.name}".`);
-                return;
-            }
-        }
-
         scheduleData[currentScheduleType] = newTasks;
         saveScheduleDataToStorage();
         renderScheduleCircle();
         renderChecklist();
         updateCentralToCurrentActive();
-        uploadDataToCloud(); // Sync configuration changes
-
-        if (newTasks.length > 0) {
-            selectTask(newTasks[0]);
-        }
-
         toggleEditMode();
-        showToast("Lịch trình đã được thay đổi và cập nhật đồng bộ!");
+        showToast("Lịch trình đã được cập nhật!");
     }
 
     function resetToDefaults() {
-        // Custom interactive dialog UI replacement for confirm()
-        if (confirm("Đặt lại lịch gốc thời gian biểu? Toàn bộ sửa đổi của ngày thường và cuối tuần sẽ bị xoá.")) {
+        if (confirm("Đặt lại lịch gốc mẫu?")) {
             localStorage.removeItem('365_schedule_data');
             loadScheduleData();
             renderScheduleCircle();
             renderChecklist();
             updateCentralToCurrentActive();
-            uploadDataToCloud();
-
-            if (scheduleData[currentScheduleType].length > 0) {
-                selectTask(scheduleData[currentScheduleType][0]);
-            }
             toggleEditMode();
-            showToast("Đặt lại lịch mẫu mặc định thành công!");
+            showToast("Đặt lại thành công!");
         }
     }
 
-    // Initialize standard tick updates
     function initRealTimeTick() {
         const needle = document.getElementById('time-needle');
         const hub = document.getElementById('time-needle-hub');
-        const liveClockText = document.getElementById('live-clock');
-
-        needle.classList.remove('hidden');
-        hub.classList.remove('hidden');
-
-        function updateClockState() {
+        needle.classList.remove('hidden'); hub.classList.remove('hidden');
+        setInterval(() => {
             const now = new Date();
-            const hrs = now.getHours();
-            const mins = now.getMinutes();
-            const secs = now.getSeconds();
-
-            liveClockText.textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
-            const decimalHour = hrs + mins / 60 + secs / 3600;
-            const needleAngle = decimalHour * 15;
-            
-            const pt = polarToCartesian(250, 250, 215, needleAngle);
-            needle.setAttribute('x2', pt.x);
-            needle.setAttribute('y2', pt.y);
-
+            const hrs = now.getHours(); const mins = now.getMinutes(); const secs = now.getSeconds();
+            document.getElementById('live-clock').textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            const pt = polarToCartesian(250, 250, 215, (hrs + mins / 60 + secs / 3600) * 15);
+            needle.setAttribute('x2', pt.x); needle.setAttribute('y2', pt.y);
             updateCentralToCurrentActive();
-        }
-
-        updateClockState();
-        setInterval(updateClockState, 1000);
+        }, 1000);
     }
 
     function setupModeToggles() {
-        const btnWeekday = document.getElementById('btn-weekday');
-        const btnWeekend = document.getElementById('btn-weekend');
-
-        btnWeekday.addEventListener('click', () => {
-            if (currentScheduleType === 'weekday') return;
-            currentScheduleType = 'weekday';
-            toggleModeButtons(btnWeekday, btnWeekend);
-        });
-
-        btnWeekend.addEventListener('click', () => {
-            if (currentScheduleType === 'weekend') return;
-            currentScheduleType = 'weekend';
-            toggleModeButtons(btnWeekend, btnWeekday);
-        });
-
-        document.getElementById('btn-complete-task').addEventListener('click', () => {
-            if (selectedTaskId) {
-                toggleTaskChecked(selectedTaskId);
-            }
-        });
+        const w = document.getElementById('btn-weekday');
+        const e = document.getElementById('btn-weekend');
+        w.addEventListener('click', () => { currentScheduleType = 'weekday'; toggleModeButtons(w, e); });
+        e.addEventListener('click', () => { currentScheduleType = 'weekend'; toggleModeButtons(e, w); });
+        document.getElementById('btn-complete-task').addEventListener('click', () => { if (selectedTaskId) toggleTaskChecked(selectedTaskId); });
     }
 
-    function toggleModeButtons(activeBtn, inactiveBtn) {
-        activeBtn.className = "py-2 text-xs font-medium rounded-lg transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md shadow-blue-500/10";
-        inactiveBtn.className = "py-2 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2";
-        
-        renderScheduleCircle();
-        renderChecklist();
-        updateCentralToCurrentActive();
-        
-        const data = scheduleData[currentScheduleType];
-        if (data && data.length > 0) {
-            selectTask(data[0]);
-        }
+    function toggleModeButtons(a, i) {
+        a.className = "py-2 text-xs font-medium rounded-lg transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-md";
+        i.className = "py-2 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2";
+        renderScheduleCircle(); renderChecklist(); updateCentralToCurrentActive();
+        if (scheduleData[currentScheduleType].length > 0) selectTask(scheduleData[currentScheduleType][0]);
     }
 
-    // Assign functions to window scope to maintain inline onclick HTML event targets
     window.toggleEditMode = toggleEditMode;
     window.saveAllEdits = saveAllEdits;
     window.resetToDefaults = resetToDefaults;
-    window.connectSyncCode = connectSyncCode;
-    window.copySyncCode = copySyncCode;
+    window.copyDataSyncCode = copyDataSyncCode;
+    window.connectDataSync = connectDataSync;
 
-    // --- MAIN EXECUTION PIPELINE ---
     window.onload = function() {
-        lucide.createIcons();
-        loadScheduleData();
-        loadChecklistFromStorage();
-        updateCountdownDashboard();
-        
-        setupModeToggles();
-        renderScheduleCircle();
-        renderChecklist();
-        initRealTimeTick();
-
-        // Connect cloud real-time DB
-        initCloudSync();
-
-        // Initial highlights
-        const initialTasks = scheduleData[currentScheduleType];
-        if (initialTasks && initialTasks.length > 0) {
-            selectTask(initialTasks[0]);
-        }
+        lucide.createIcons(); loadScheduleData(); loadChecklistFromStorage(); updateCountdownDashboard();
+        setupModeToggles(); renderScheduleCircle(); renderChecklist(); initRealTimeTick();
+        if (scheduleData[currentScheduleType].length > 0) selectTask(scheduleData[currentScheduleType][0]);
     };
 </script>
 </body>
